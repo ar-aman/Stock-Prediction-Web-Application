@@ -1,1 +1,1 @@
-# Stock-Prediction-Web-Aplication
+# Stock-Prediction-Web-Application
