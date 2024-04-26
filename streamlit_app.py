@@ -7,6 +7,8 @@ from datetime import datetime
 from keras.models import load_model
 import streamlit as st
 
+st.set_page_config(layout='wide')
+
 start = '2010-01-01'
 end = datetime.today().strftime('%Y-%m-%d')
 
