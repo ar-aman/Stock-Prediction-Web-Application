@@ -91,14 +91,12 @@ if st.button('Fetch Data'):
         y_predicted = y_predicted * scale_factor
         y_test = y_test * scale_factor
 
-        if st.button('Plot Original vs Predicted'):
-
-            #final graph
-            st.subheader('Predictions vs Original')
-            fig2 = plt.figure(figsize=(12,6))
-            plt.plot(y_test, 'b', label = 'Original Price')
-            plt.plot(y_predicted, 'r', label = 'Predicted Price')
-            plt.xlabel('Time')
-            plt.ylabel('Price')
-            plt.legend(loc='upper left')
-            st.pyplot(fig2)
+        #final graph
+        st.subheader('Predictions vs Original')
+        fig2 = plt.figure(figsize=(12,6))
+        plt.plot(y_test, 'b', label = 'Original Price')
+        plt.plot(y_predicted, 'r', label = 'Predicted Price')
+        plt.xlabel('Time')
+        plt.ylabel('Price')
+        plt.legend(loc='upper left')
+        st.pyplot(fig2)
