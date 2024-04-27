@@ -25,35 +25,33 @@ if st.button('Fetch Data'):
     st.subheader('Data from 2010 - Present')
     st.write(df.describe())
 
-    if st.button('Run Predictions'):
+    # Visualizations
 
-        # Visualizations
+    plt.rcParams.update({'axes.facecolor':'#1B1B1C'})
 
-        plt.rcParams.update({'axes.facecolor':'#1B1B1C'})
+    st.subheader('Closing Price vs Time Chart')
+    fig = plt.figure(figsize = (12,6))
+    plt.plot(df.Close, 'b', label = 'Closing Price')
+    plt.legend(loc='upper left')
+    st.pyplot(fig)
 
-        st.subheader('Closing Price vs Time Chart')
-        fig = plt.figure(figsize = (12,6))
-        plt.plot(df.Close, 'b', label = 'Closing Price')
-        plt.legend(loc='upper left')
-        st.pyplot(fig)
+    st.subheader('Closing Price vs Time Chart with 100MA')
+    ma100 = df.Close.rolling(100).mean()
+    fig = plt.figure(figsize = (12,6))
+    plt.plot(df.Close, 'b', label = 'Closing Price')
+    plt.plot(ma100, 'r', label = 'MA100')
+    plt.legend(loc='upper left')
+    st.pyplot(fig)
 
-        st.subheader('Closing Price vs Time Chart with 100MA')
-        ma100 = df.Close.rolling(100).mean()
-        fig = plt.figure(figsize = (12,6))
-        plt.plot(df.Close, 'b', label = 'Closing Price')
-        plt.plot(ma100, 'r', label = 'MA100')
-        plt.legend(loc='upper left')
-        st.pyplot(fig)
-
-        st.subheader('Closing Price vs Time Chart with 100MA & 200MA')
-        ma100 = df.Close.rolling(100).mean()
-        ma200 = df.Close.rolling(200).mean()
-        fig = plt.figure(figsize = (12,6))
-        plt.plot(df.Close, 'b', label = 'Closing Price')
-        plt.plot(ma100, 'r', label = 'MA100')
-        plt.plot(ma200, '#D1FF17', label = 'MA100')
-        plt.legend()
-        st.pyplot(fig)
+    st.subheader('Closing Price vs Time Chart with 100MA & 200MA')
+    ma100 = df.Close.rolling(100).mean()
+    ma200 = df.Close.rolling(200).mean()
+    fig = plt.figure(figsize = (12,6))
+    plt.plot(df.Close, 'b', label = 'Closing Price')
+    plt.plot(ma100, 'r', label = 'MA100')
+    plt.plot(ma200, '#D1FF17', label = 'MA100')
+    plt.legend()
+    st.pyplot(fig)
 
         #splitting data into training and testing
 
