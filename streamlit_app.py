@@ -53,48 +53,48 @@ if st.button('Fetch Data'):
     plt.legend()
     st.pyplot(fig)
 
-        #splitting data into training and testing
+    #splitting data into training and testing
 
-        data_training = pd.DataFrame(df['Close'][0:int(len(df)*0.70)])
-        data_testing = pd.DataFrame(df['Close'][int(len(df)*0.70):int(len(df))])
+    data_training = pd.DataFrame(df['Close'][0:int(len(df)*0.70)])
+    data_testing = pd.DataFrame(df['Close'][int(len(df)*0.70):int(len(df))])
 
-        #importing sklearn to scale down the value between 0 and 1
-        from sklearn.preprocessing import MinMaxScaler
-        scaler = MinMaxScaler(feature_range=(0,1))
+    #importing sklearn to scale down the value between 0 and 1
+    from sklearn.preprocessing import MinMaxScaler
+    scaler = MinMaxScaler(feature_range=(0,1))
 
-        data_training_array = scaler.fit_transform(data_training)
+    data_training_array = scaler.fit_transform(data_training)
 
-        #loading model
-        model = load_model('keras_model.h5')
+    #loading model
+    model = load_model('keras_model.h5')
 
-        past_100_days = data_training.tail(100)
-        final_df = pd.concat([past_100_days, data_testing], ignore_index=True)
-        input_data = scaler.fit_transform(final_df)
+    past_100_days = data_training.tail(100)
+    final_df = pd.concat([past_100_days, data_testing], ignore_index=True)
+    input_data = scaler.fit_transform(final_df)
 
-        x_test = []
-        y_test = []
+    x_test = []
+    y_test = []
 
-        for i in range(100, input_data.shape[0]):
-            x_test.append(input_data[i-100: i])
-            y_test.append(input_data[i, 0])
+    for i in range(100, input_data.shape[0]):
+        x_test.append(input_data[i-100: i])
+        y_test.append(input_data[i, 0])
 
-        x_test,y_test = np.array(x_test), np.array(y_test)
+    x_test,y_test = np.array(x_test), np.array(y_test)
 
-        y_predicted = model.predict(x_test)
+    y_predicted = model.predict(x_test)
 
-        #scaling up the value
-        scaler = scaler.scale_
+    #scaling up the value
+    scaler = scaler.scale_
 
-        scale_factor = 1/scaler[0]
-        y_predicted = y_predicted * scale_factor
-        y_test = y_test * scale_factor
+    scale_factor = 1/scaler[0]
+    y_predicted = y_predicted * scale_factor
+    y_test = y_test * scale_factor
 
-        #final graph
-        st.subheader('Predictions vs Original')
-        fig2 = plt.figure(figsize=(12,6))
-        plt.plot(y_test, 'b', label = 'Original Price')
-        plt.plot(y_predicted, 'r', label = 'Predicted Price')
-        plt.xlabel('Time')
-        plt.ylabel('Price')
-        plt.legend(loc='upper left')
-        st.pyplot(fig2)
+    #final graph
+    st.subheader('Predictions vs Original')
+    fig2 = plt.figure(figsize=(12,6))
+    plt.plot(y_test, 'b', label = 'Original Price')
+    plt.plot(y_predicted, 'r', label = 'Predicted Price')
+    plt.xlabel('Time')
+    plt.ylabel('Price')
+    plt.legend(loc='upper left')
+    st.pyplot(fig2)
